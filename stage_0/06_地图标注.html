@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <title>地图标注</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+
+        // 1初始化添加图层
+        const viewer = new Cesium.Viewer('cesium-container', {
+                imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+                url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+            })
+        })
+        // 隐藏版权信息
+        viewer._cesiumWidget._creditContainer.style.display = "none"
+
+        //  1 高德地图标注
+        const guadMapLoad=new Cesium.UrlTemplateImageryProvider({
+            url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8"
+        })
+        // viewer.imageryLayers.addImageryProvider(guadMapLoad)
+
+        //  2 天地图标注
+        const token= '374e3348e10cd75eea1440986e480412'
+        const webMapTileLoad=new Cesium.WebMapTileServiceImageryProvider({
+            url: `http://t0.tianditu.com/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=${token}`,
+            layer: "tdtAnnoLayer",
+            style: "default",
+            format: "image/jpeg",
+            tileMatrixSetID: "GoogleMapsCompatible",
+            show: false
+        })
+        viewer.imageryLayers.addImageryProvider(webMapTileLoad)
+
+
+
+
+
+
+        // console.log(viewer.imageryLayers);
+
+
+
+
+    </script>
+</body>
+
+</html>

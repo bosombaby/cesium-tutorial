@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <title>鼠标键盘事件</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+        const viewer = new Cesium.Viewer('cesium-container', {
+               
+        })
+        // 隐藏版权信息
+        viewer._cesiumWidget._creditContainer.style.display = "none"
+
+        // 鼠标事件
+        const handler=new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+
+        // 激活回调函数,不同的触发事件值不一样
+        handler.setInputAction((a)=>{
+            console.log('点击触发坐标',a);
+        },Cesium.ScreenSpaceEventType.LEFT_CLICK, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+
+        /* handler.setInputAction((positions) => {
+            console.log('移动触发坐标', positions);
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+
+        handler.setInputAction((delta) => {
+            console.log('缩放滚轮值', delta);
+        }, Cesium.ScreenSpaceEventType.WHEEL) */
+
+        // 移除事件
+        handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK)
+
+    </script>
+</body>
+
+</html>

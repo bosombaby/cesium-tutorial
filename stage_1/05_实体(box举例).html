@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <title>实体盒子</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+        const viewer = new Cesium.Viewer('cesium-container', {
+
+        })
+        // 隐藏版权信息
+        viewer._cesiumWidget._creditContainer.style.display = "none"
+
+
+        // 目标地点
+        const target= Cesium.Cartesian3.fromDegrees(118, 34, 0)
+        const boxEntity=viewer.entities.add({
+            id:'123',
+            name:'box-entity',
+            position:target,
+            box:{
+                dimensions:new Cesium.Cartesian3(100,100,100),
+                distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,10000),
+                material:Cesium.Color.RED.withAlpha(0.5),
+                fill:true,
+                outline:true,
+                outlineWidth:110,
+                outlineColor:Cesium.Color.PINK,
+                show:true
+            }
+        })
+
+        // 定位相机位置
+
+        // viewer.zoomTo(boxEntity) 
+
+        // 相机角度
+        const angle=new Cesium.Cartesian3(500,500,500)
+        viewer.camera.lookAt(target,angle)
+
+    </script>
+</body>
+
+</html>

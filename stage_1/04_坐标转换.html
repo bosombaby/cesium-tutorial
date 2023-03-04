@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <title>坐标转换</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+        const viewer = new Cesium.Viewer('cesium-container', {
+
+        })
+        // 隐藏版权信息
+        viewer._cesiumWidget._creditContainer.style.display = "none"
+
+        // 转换方法：角度转弧度为π / 180×角度。弧度变角度为180 / π×弧度
+        // 三维笛卡尔坐标系
+        const cartesian3=new Cesium.Cartesian3(-2485034.2627892355,4673669.7053201245, 3546446.5637806896)
+        // console.log(cartesian3);
+
+        //wgs84坐标系 （经纬度创建）
+        const cartographic=Cesium.Cartographic.fromDegrees(118,34)
+        console.log(cartographic);
+
+
+        // 连云港经纬度118E 34N
+        // 弧度制2.059488517353309 0.5934119456780721
+        // 经纬度转弧度
+        let radiansE = Cesium.Math.toRadians(118)
+        let radiansN=Cesium.Math.toRadians(34)
+        console.log(radiansE, radiansN);
+
+        // 弧度转经纬度
+        let degreesE = Cesium.Math.toDegrees(2.059488517353309)
+        let degreesN=Cesium.Math.toDegrees(0.5934119456780721)
+        console.log(degreesE,degreesN);
+        
+        // Cartesian3转Cartographic
+        const cartographic2 = Cesium.Cartographic.fromCartesian(cartesian3)
+        console.log(cartographic2);
+
+        // Cartographic转Cartesian3
+        const cartesian = Cesium.Ellipsoid.WGS84.cartographicToCartesian(cartographic) 
+        console.log(cartesian);
+
+    </script>
+</body>
+
+</html>

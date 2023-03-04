@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <style>
+        .start-render{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: skyblue;
+            cursor: pointer;
+        }
+    </style>
+    <title>场景渲染事件</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <button class="start-render">点击渲染</button>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+        const viewer = new Cesium.Viewer('cesium-container', {
+
+        })
+        // 隐藏版权信息
+        viewer._cesiumWidget._creditContainer.style.display = "none"
+
+        // 关闭自动渲染
+        viewer.useDefaultRenderLoop=false
+
+    
+
+        const renderDom=document.querySelector('.start-render')
+        const count=0
+        renderDom.addEventListener('click',()=>{
+            // 主动渲染
+            viewer.render()
+            printInfo()
+            console.log('当前渲染次数',++count);
+        })
+
+        // 点击6次触发渲染按钮后，地球将会被渲染出来：
+        //点击7次触发渲染按钮后，地球外围的大气层将会被渲染出来：
+        let printInfo=()=>{
+            // 场景更新前后
+            viewer.scene.preUpdate.addEventListener((e) => {
+                console.log('场景更新前');
+            })
+            viewer.scne.postUpdate.addEventListener(() => {
+                console.log('场景更新后');
+            })
+            // 场景渲染前后
+            viewer.scene.preRender.addEventListener(()=>{
+                console.log('场景渲染前');
+            })
+            viewer.scene.preUpdate.addEventListener(() => {
+                console.log('场景渲染后');
+            })
+        }
+
+        
+    </script>
+</body>
+
+</html>

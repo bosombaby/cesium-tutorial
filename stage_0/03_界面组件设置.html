@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <style>
+        /* 隐藏图标 */
+        .cesium-widget-credits {
+            display: none;
+        }
+    </style>
+    <title>cesium界面组件设置</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+        // 最基础的cesium地球
+        // const viewer = new Cesium.CesiumWidget('cesium-container')
+        
+        const viewer = new Cesium.Viewer('cesium-container',{
+            timeline:false,
+            fullscreenButton: false // 隐藏全屏按钮
+        }) 
+        
+       
+        // 隐藏版权信息
+        viewer._cesiumWidget._creditContainer.style.display = "none"
+
+// 场景操作
+        // 显示帧率
+        viewer.scene.debugShowFramesPerSecond=true
+        viewer.scene.skyBox.show=false
+        viewer.scene.sun.show = false  // 隐藏太阳
+
+    </script>
+</body>
+
+</html>

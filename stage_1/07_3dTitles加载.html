@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <title>3dTitles加载</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+        const viewer = new Cesium.Viewer('cesium-container', {
+
+        })
+        // 隐藏版权信息
+        viewer._cesiumWidget._creditContainer.style.display = "none"
+
+
+        //目标位置与视角方向
+        const tileset= viewer.scene.primitives.add(
+            new Cesium.Cesium3DTileset({
+                url: '../libs/Assets/3dTitles/tilesset/tileset.json',
+            })
+        )
+
+        // 开始调整tileset位置和缩放大小
+        let params={
+            // 模型中心经纬度和高度
+            tx:118,
+            ty:34,
+            tz:0,
+
+            // 模型旋转方向
+            rx:0,
+            ry:0,
+            rz:0,
+
+            // 缩放
+            scale:0.5
+        }
+
+        // 显示3dtiles包围盒
+        tileset.debugShowContentBoundingVolume=true
+
+        // 开启 3D Tiles 监视器
+        // viewer.extend(Cesium.viewerCesium3DTilesInspectorMixin)
+
+        // 修改 3D Tiles 的颜色和透明度
+        // tileset.style = new Cesium.Cesium3DTileStyle({
+        //     color: "color('rgba(178, 34, 34, 0.5)')", // 淡红色，透明度为0.5，半透明
+        // })
+
+        // 点击修改3dtiles颜色，使用坐标拾取
+        const handler=new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+        
+        handler.setInputAction((target)=>{
+
+            // 判断点击的元素
+            const feature=viewer.scene.pick(target.position)
+            if(feature instanceof Cesium.Cesium3DTileFeature){
+                feature.color=Cesium.Color.RED
+            }
+            // console.log(feature.getProperty('Longitude'));
+            console.log(target.position);
+        },Cesium.ScreenSpaceEventType.LEFT_CLICK)
+
+        // 后续修改模型
+        // 修改高度值大于50的3D Tiles的颜色和透明度
+        tileset.style = new Cesium.Cesium3DTileStyle({
+            color: {
+                // 条件筛选
+                conditions: [
+                    ["${Height} > 50", "color('rgba(100,100,100, 0.5)')"],
+                ]
+            },
+            show:'${Height} > 12'
+        })
+        // 锁定视角
+        viewer.zoomTo(tileset)
+
+    </script>
+</body>
+
+</html>

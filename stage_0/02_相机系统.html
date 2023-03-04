@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../libs/Assets/Images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../libs/Widgets/widgets.css">
+    <link rel="stylesheet" href="../libs/Assets/style/reste.css">
+    <script src="../libs/Cesium.js"></script>
+    <title>cesium相机系统</title>
+</head>
+
+<body>
+    <div id="cesium-container"></div>
+    <script>
+
+        // 引入token，装入容器
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0NmY4OGRkZS03ZTljLTQ5MDMtYmUwZC0wNmM2ZjdmM2M1MzMiLCJpZCI6MTI2MjUzLCJpYXQiOjE2NzczMTI2ODJ9.KO5KCez-xGcJBJfY8XYWAlUXHO4WWrZUm6tCZ1MfCWM'
+        const viewer = new Cesium.Viewer('cesium-container')
+        
+        // 相机和物体的成像是相反的
+
+        // 目标的位置
+        const target=Cesium.Cartesian3.fromDegrees(118,34,1500)
+        // 2.1 相机恢复初始位置
+        // viewer.camera,flyHome(3)
+
+        // 2.2 飞行到指定位置 flyTo 逆时针为正
+/*         viewer.camera.flyTo({
+            destination:target,
+            orientation:{
+                roll: 0,
+                pitch: Cesium.Math.toRadians(-60),
+                heading:0
+            },
+            duration:1
+        }) */
+        
+        // 2.3 飞行到包围球 flyToBoundingSphere
+        // const sphere=new Cesium.BoundingSphere(target,10)
+        // viewer.camera.flyToBoundingSphere(sphere)
+        
+
+    </script>
+</body>
+
+</html>
